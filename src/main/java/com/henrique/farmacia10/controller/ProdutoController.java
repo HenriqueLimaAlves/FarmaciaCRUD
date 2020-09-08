@@ -15,39 +15,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.henrique.farmacia10.model.Categoria;
-import com.henrique.farmacia10.repository.CategoriaRepository;
+import com.henrique.farmacia10.model.Produto;
+import com.henrique.farmacia10.repository.ProdutoRepository;
 
 @RestController
 @CrossOrigin(origins ="*", allowedHeaders = "*")
-@RequestMapping("/categoria")
-public class CategoriaController {
+@RequestMapping("/produtos")
+public class ProdutoController {
 	
 	@Autowired
-	private CategoriaRepository repository;
+	private ProdutoRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAllCategoria(){
+	public ResponseEntity<List<Produto>> findAllProduto(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Categoria> findByIdCategoria(@PathVariable Long id){
+	public ResponseEntity<Produto> findById(@PathVariable Long id){
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> postCategoria(@RequestBody Categoria categoria){
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
+	public ResponseEntity<Produto> postProduto(@RequestBody Produto produto){
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(produto));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Categoria> putCategoria(@RequestBody Categoria descricao){
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(descricao));
+	public ResponseEntity<Produto> putProduto(@RequestBody Produto nome){
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(nome));
 	}
 	
-	@DeleteMapping("{id}")
-	public void deleteCategoria(@PathVariable Long id){
+	@DeleteMapping("/{id}")
+	public void deleteProduto(@PathVariable Long id) {
 		repository.deleteById(id);
 	}
+	
+	
 }
